@@ -1,11 +1,12 @@
 import java.security.SecureRandom;
-import java.util.Stack;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class DeckOfCards {
     private static final int NUMBER_OF_CARDS = 52;
-    private static final int DECK_SPLIT = 26;
-    private Stack<Card> userDeck = new Stack<>();
-    private Stack<Card> compDeck = new Stack<>();
+    private Queue<Card> userDeck = new LinkedList<>();
+    private Queue<Card> compDeck = new LinkedList<>();
 
     private Card[] deck = new Card[NUMBER_OF_CARDS];
 
@@ -31,17 +32,89 @@ public class DeckOfCards {
         }
     }
 
-    public void list() {
+    public void deal() {
         for (int i = 0; i < deck.length; i++) {
-            System.out.println(deck[i].toString());
+            userDeck.offer(deck[i]);
+            i++;
+            compDeck.offer(deck[i]);
         }
     }
 
-    public void deal() {
+    public Boolean gameOn() {
+        if (userDeck.isEmpty() || compDeck.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void play() {
+        Card userCard = userDeck.peek();
+        Card compCard = compDeck.peek();
+        System.out.println("Your Card: " + userCard);
+        System.out.println("Computer Card: " + compCard);
+        if (userCard.value() > compCard.value()) {
+            System.out.println("You takes the cards");
+            playWin(userDeck, compDeck);
+        } else if (userCard.value() < compCard.value()) {
+            System.out.println("Computer takes the cards");
+            playWin(compDeck, userDeck);
+        } else {
+            war(userCard, compCard);
+        }
+    }
+
+    public void playWin(Queue<Card> winner, Queue<Card> loser) {
+        winner.offer(loser.poll());
+        winner.offer(winner.poll());
+    }
+
+    public void war(Card userCardOne, Card compCardOne) {
+        Queue<Card> pot = new LinkedList<>();
+        pot.offer(userCardOne);
+        pot.offer(compCardOne);
+        Boolean warOn = true;
+        do {
+           warOn =  warPlay(pot);
+        } while(warOn);
+    }
+
+    public Boolean warPlay(Queue<Card> pot) {
+        pot.offer(userDeck.poll());
+        pot.offer(compDeck.poll());
+        System.out.println("You both place one card face down");
+        Card userCard = userDeck.poll();
+        System.out.println("Your Card: " + userCard);
+        Card compCard = compDeck.poll();
+        System.out.println("Computer Car: " + compCard);
+        pot.offer(userCard);
+        pot.offer(compCard);
+        if (userCard.value() > compCard.value()) {
+            System.out.println("You take the cards");
+            warWin(pot, userDeck);
+            return false;
+        } else if (userCard.value() < compCard.value()) {
+            System.out.println("Computer takes the cards");
+            warWin(pot, compDeck);
+            return false;
+        } else {
+            System.out.println("The cards tied.");
+            return true;
+        }
+    }
+
+    public void warWin (Queue<Card> pot, Queue<Card> winner) {
+        Iterator<Card> cards = pot.iterator();
+        while(cards.hasNext()) {
+            Card current = cards.next();
+            winner.offer(current);
+        }
+    }
+
+    /*
+    public void list() {
         for (int i = 0; i < deck.length; i++) {
-            userDeck.push(deck[i]);
-            i++;
-            compDeck.push(deck[i]);
+            System.out.println(deck[i].toString());
         }
     }
 
@@ -56,4 +129,5 @@ public class DeckOfCards {
             System.out.println(compDeck.pop());
         }
     }
+    */
 }

@@ -10,6 +10,14 @@ public class Card {
         return rank + " of " + suit;
     }
     
+    public Rank getRank() {
+        return rank;
+    }
+
+    public int value() {
+        return rank.getValue();
+    }
+
     /* 
     public Suit getSuit() {
         return suit;
@@ -17,10 +25,6 @@ public class Card {
 
     public void setSuit(Suit suit) {
         this.suit = suit;
-    }
-
-    public Rank getRank() {
-        return rank;
     }
 
     public void setRank(Rank rank) {
