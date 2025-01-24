@@ -13,7 +13,7 @@ public class DeckOfCards {
 
     public DeckOfCards() {
         int count = 0;
-        for (int i = 0; i <13; i++) {
+        for (int i = 0; i < 13; i++) {
             Rank rank = Rank.values()[i];
             for (int j = 0; j < 4; j++) {
                 deck[count] = new Card(rank, Suit.values()[j]);
@@ -49,8 +49,17 @@ public class DeckOfCards {
         }
     }
 
+    public void printDividers() {
+        for (int i = 0; i < 40; i++) {
+            System.out.print("=");
+        }
+        System.out.println();
+    }
+
+    //goes through one play of the game 
     public void play() {
         Scanner input = new Scanner(System.in);
+        printDividers();
         Card userCard = userDeck.peek();
         Card compCard = compDeck.peek();
         System.out.println("Your Card: " + userCard);
@@ -68,6 +77,8 @@ public class DeckOfCards {
             System.out.println("Press [Enter] to see the next play.");
             String enter = input.nextLine();
             if (enter.equals("")) {
+                printDividers();
+                System.out.println();
                 break;
             } else {
                 System.out.println("Invalid response please try again");
@@ -75,6 +86,7 @@ public class DeckOfCards {
         }
     }
 
+    //gives winner of the play cards
     public void playWin(Queue<Card> winner, Queue<Card> loser) {
         winner.offer(loser.poll());
         winner.offer(winner.poll());
@@ -82,9 +94,11 @@ public class DeckOfCards {
         System.out.println("Computer Deck: " + compDeck.size());
     }
 
+    //starts off war
     public void war() {
         System.out.println("\nWAR");
-        Queue<Card> pot = new LinkedList<>();
+        // used to collect all the cards during a war play
+        Queue<Card> pot = new LinkedList<>(); 
         Card userCard = userDeck.poll();
         Card compCard = compDeck.poll();
         pot.offer(userCard);
@@ -95,6 +109,7 @@ public class DeckOfCards {
         } while(warOn);
     }
 
+    //goes through war play and will continue until a player wins
     public Boolean warPlay(Queue<Card> pot) {
         pot.offer(userDeck.poll());
         pot.offer(compDeck.poll());
@@ -119,6 +134,7 @@ public class DeckOfCards {
         }
     }
 
+    //gives the war winner the pot or pile of cards 
     public void warWin (Queue<Card> pot, Queue<Card> winner) {
         Iterator<Card> cards = pot.iterator();
         while(cards.hasNext()) {
@@ -129,7 +145,10 @@ public class DeckOfCards {
         System.out.println("Computer Deck: " + compDeck.size());
     }
 
+    
     /*
+    Methods for testing and printing out decks to check if cards are moving around properly
+
     public void list() {
         for (int i = 0; i < deck.length; i++) {
             System.out.println(deck[i].toString());

@@ -17,18 +17,4 @@ public class Card {
     public int value() {
         return rank.getValue();
     }
-
-    /* 
-    public Suit getSuit() {
-        return suit;
-    }
-
-    public void setSuit(Suit suit) {
-        this.suit = suit;
-    }
-
-    public void setRank(Rank rank) {
-        this.rank = rank;
-    }
-    */
 }

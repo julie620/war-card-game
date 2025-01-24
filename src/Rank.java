@@ -18,6 +18,7 @@ public enum Rank {
     private Rank (int value) {
         this.value = value;
     }
+
     public int getValue() {
         return value;
     }
