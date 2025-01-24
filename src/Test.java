@@ -3,6 +3,8 @@ public class Test {
         DeckOfCards myDeckOfCards = new DeckOfCards();
         myDeckOfCards.shuffle();
         myDeckOfCards.deal();
-        myDeckOfCards.play();
+        while(myDeckOfCards.gameOn()) {
+            myDeckOfCards.play();
+        }
     }
 }

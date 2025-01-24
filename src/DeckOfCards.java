@@ -2,6 +2,7 @@ import java.security.SecureRandom;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 
 public class DeckOfCards {
     private static final int NUMBER_OF_CARDS = 52;
@@ -49,30 +50,45 @@ public class DeckOfCards {
     }
 
     public void play() {
+        Scanner input = new Scanner(System.in);
         Card userCard = userDeck.peek();
         Card compCard = compDeck.peek();
         System.out.println("Your Card: " + userCard);
         System.out.println("Computer Card: " + compCard);
         if (userCard.value() > compCard.value()) {
-            System.out.println("You takes the cards");
+            System.out.println("You take the cards");
             playWin(userDeck, compDeck);
         } else if (userCard.value() < compCard.value()) {
             System.out.println("Computer takes the cards");
             playWin(compDeck, userDeck);
         } else {
-            war(userCard, compCard);
+            war();
+        }
+        while (true) {
+            System.out.println("Press [Enter] to see the next play.");
+            String enter = input.nextLine();
+            if (enter.equals("")) {
+                break;
+            } else {
+                System.out.println("Invalid response please try again");
+            }
         }
     }
 
     public void playWin(Queue<Card> winner, Queue<Card> loser) {
         winner.offer(loser.poll());
         winner.offer(winner.poll());
+        System.out.println("Your Deck: " + userDeck.size());
+        System.out.println("Computer Deck: " + compDeck.size());
     }
 
-    public void war(Card userCardOne, Card compCardOne) {
+    public void war() {
+        System.out.println("\nWAR");
         Queue<Card> pot = new LinkedList<>();
-        pot.offer(userCardOne);
-        pot.offer(compCardOne);
+        Card userCard = userDeck.poll();
+        Card compCard = compDeck.poll();
+        pot.offer(userCard);
+        pot.offer(compCard);
         Boolean warOn = true;
         do {
            warOn =  warPlay(pot);
@@ -84,9 +100,9 @@ public class DeckOfCards {
         pot.offer(compDeck.poll());
         System.out.println("You both place one card face down");
         Card userCard = userDeck.poll();
-        System.out.println("Your Card: " + userCard);
+        System.out.println("Your Face up Card: " + userCard);
         Card compCard = compDeck.poll();
-        System.out.println("Computer Car: " + compCard);
+        System.out.println("Computer's Face Up Card: " + compCard);
         pot.offer(userCard);
         pot.offer(compCard);
         if (userCard.value() > compCard.value()) {
@@ -109,6 +125,8 @@ public class DeckOfCards {
             Card current = cards.next();
             winner.offer(current);
         }
+        System.out.println("Your Deck: " + userDeck.size());
+        System.out.println("Computer Deck: " + compDeck.size());
     }
 
     /*
@@ -119,14 +137,16 @@ public class DeckOfCards {
     }
 
     public void userHand() {
-        for (int i = 0;i < DECK_SPLIT; i++) {
-            System.out.println(userDeck.pop());
+        Iterator<Card> cards = userDeck.iterator();
+        while(cards.hasNext()) {
+            System.out.println(cards.next());
         }
     }
 
     public void compHand() {
-        for (int i = 0;i < DECK_SPLIT; i++) {
-            System.out.println(compDeck.pop());
+        Iterator<Card> cards = compDeck.iterator();
+        while(cards.hasNext()) {
+            System.out.println(cards.next());
         }
     }
     */
