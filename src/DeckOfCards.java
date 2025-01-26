@@ -43,6 +43,7 @@ public class DeckOfCards {
 
     public Boolean gameOn() {
         if (userDeck.isEmpty() || compDeck.isEmpty()) {
+            System.out.println("Game Over");
             return false;
         } else {
             return true;
