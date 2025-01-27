@@ -11,5 +11,10 @@ All the user has to do is press [Enter] when they are ready to see the next play
 * Queues
 * Iterators
 
+## Additional Topics
+* Enums
+* For-Each Loops
+* Arrays
+
 Juliana Serrano\
 01/28/2025

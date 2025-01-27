@@ -13,10 +13,9 @@ public class DeckOfCards {
 
     public DeckOfCards() {
         int count = 0;
-        for (int i = 0; i < 13; i++) {
-            Rank rank = Rank.values()[i];
-            for (int j = 0; j < 4; j++) {
-                deck[count] = new Card(rank, Suit.values()[j]);
+        for (Rank rank : Rank.values()) {
+            for (Suit suit : Suit.values()) {
+                deck[count] = new Card(rank, suit);
                 count++;
             }
         }
@@ -145,18 +144,19 @@ public class DeckOfCards {
         System.out.println("Your Deck: " + userDeck.size());
         System.out.println("Computer Deck: " + compDeck.size());
     }
-
     
     /*
     Methods for testing and printing out decks to check if cards are moving around properly
 
     public void list() {
+        System.out.println("\nWhole Deck");
         for (int i = 0; i < deck.length; i++) {
             System.out.println(deck[i].toString());
         }
     }
 
     public void userHand() {
+        System.out.println("\nUser Deck");
         Iterator<Card> cards = userDeck.iterator();
         while(cards.hasNext()) {
             System.out.println(cards.next());
@@ -164,6 +164,7 @@ public class DeckOfCards {
     }
 
     public void compHand() {
+        System.out.println("\nComputer Deck");
         Iterator<Card> cards = compDeck.iterator();
         while(cards.hasNext()) {
             System.out.println(cards.next());
